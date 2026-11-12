@@ -1,1 +1,309 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Una aventura contigo ❤️</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Trebuchet MS", sans-serif;
+  color: white;
+  background: linear-gradient(#172b4b, #416b78, #263c35);
+  overflow-x: hidden;
+}
+
+.sky {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 15% 20%, #fff 1px, transparent 2px),
+    radial-gradient(circle at 80% 12%, #fff 1px, transparent 2px),
+    radial-gradient(circle at 65% 35%, #fff 1px, transparent 2px);
+  background-size: 180px 150px;
+  opacity: .7;
+}
+
+.container {
+  position: relative;
+  max-width: 650px;
+  margin: auto;
+  padding: 55px 22px;
+  text-align: center;
+}
+
+.pixel {
+  font-family: monospace;
+  text-shadow: 3px 3px #152331;
+  letter-spacing: 2px;
+}
+
+h1 {
+  font-size: clamp(30px, 7vw, 49px);
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: #d9f4e2;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.world {
+  margin: 35px auto;
+  height: 190px;
+  max-width: 470px;
+  position: relative;
+  border: 5px solid #1e342d;
+  background: linear-gradient(#7ab8d6 0 65%, #6d9b4d 65% 100%);
+  overflow: hidden;
+  box-shadow: 0 9px #172c25;
+}
+
+.sun {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  background: #ffe58a;
+  top: 22px;
+  right: 45px;
+  box-shadow: 0 0 25px #ffe58a;
+}
+
+.cloud {
+  position: absolute;
+  width: 85px;
+  height: 20px;
+  background: white;
+  top: 48px;
+  left: 45px;
+  box-shadow: 15px -15px white, 35px 0 white;
+}
+
+.ground {
+  position: absolute;
+  bottom: 0;
+  height: 32px;
+  width: 100%;
+  background: repeating-linear-gradient(
+    90deg, #765136 0 28px, #65442e 28px 30px
+  );
+}
+
+.tree {
+  position: absolute;
+  bottom: 30px;
+  left: 15%;
+  font-size: 48px;
+}
+
+.flowers {
+  position: absolute;
+  bottom: 29px;
+  right: 17%;
+  font-size: 29px;
+}
+
+.player {
+  position: absolute;
+  bottom: 28px;
+  left: 47%;
+  font-size: 43px;
+  animation: bounce 1.5s infinite ease-in-out;
+}
+
+@keyframes bounce {
+  50% { transform: translateY(-9px); }
+}
+
+.card {
+  margin: 25px auto;
+  padding: 25px 20px;
+  background: #152b2cdd;
+  border: 3px solid #8abf83;
+  box-shadow: 7px 7px #101f20;
+}
+
+.card h2 {
+  color: #ffe6a0;
+}
+
+.memories {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.memory {
+  padding: 17px 8px;
+  background: #294c42;
+  border: 2px solid #8abf83;
+  line-height: 1.6;
+}
+
+.question {
+  font-size: 25px;
+  color: #ffe6a0;
+  line-height: 1.5;
+}
+
+button {
+  border: 0;
+  padding: 15px 22px;
+  margin: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  font-family: inherit;
+  transition: transform .2s;
+}
+
+button:hover {
+  transform: translateY(-4px);
+}
+
+.yes {
+  background: #8bd17c;
+  color: #18351e;
+  box-shadow: 0 5px #467d43;
+}
+
+.no {
+  background: #e7d8c5;
+  color: #493c34;
+  box-shadow: 0 5px #a79580;
+}
+
+#answer {
+  min-height: 45px;
+  line-height: 1.6;
+  color: #ffe6a0;
+}
+
+footer {
+  margin-top: 35px;
+  color: #d5e7d8;
+  font-size: 13px;
+}
+
+.heart {
+  position: fixed;
+  pointer-events: none;
+  animation: float 3s linear forwards;
+}
+
+@keyframes float {
+  to { transform: translateY(-100vh) rotate(30deg); opacity: 0; }
+}
+
+@media(max-width:400px) {
+  .memories { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+<div class="sky"></div>
+
+<main class="container">
+
+  <p class="pixel">✦ UNA PEQUEÑA AVENTURA ✦</p>
+
+  <h1 class="pixel">Hola, Sandra ❤️</h1>
+
+  <p class="subtitle">
+    He preparado un pequeño mundo para hacerte una pregunta.
+    No necesitas ninguna armadura para entrar.
+  </p>
+
+  <div class="world">
+    <div class="sun"></div>
+    <div class="cloud"></div>
+    <div class="tree">🌳</div>
+    <div class="flowers">🌷 🌼</div>
+    <div class="player">🧑🏻</div>
+    <div class="ground"></div>
+  </div>
+
+  <section class="card">
+    <h2 class="pixel">Nuestro pequeño mundo</h2>
+    <p>
+      Entre partidas, risas, películas y recuerdos,
+      hay muchas aventuras que siempre voy a guardar
+      con cariño.
+    </p>
+
+    <div class="memories">
+      <div class="memory">🎮<br> Nuestras partidas</div>
+      <div class="memory">🍟<br> Nuestras botanas</div>
+      <div class="memory">🎬<br> Nuestras películas</div>
+      <div class="memory">🌷<br> Los pequeños detalles</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <p class="subtitle">
+      No quiero complicar las cosas.
+      Simplemente me gustaría compartir un día bonito contigo.
+    </p>
+
+    <h2 class="question">
+      ¿Te gustaría salir conmigo? ❤️
+    </h2>
+
+    <p class="subtitle">
+      Sin presiones, sin expectativas.
+      Solo pasar un buen rato.
+    </p>
+
+    <button class="yes" onclick="answer(true)">
+      ¡Sí, me gustaría! 🌷
+    </button>
+
+    <button class="no" onclick="answer(false)">
+      Esta vez no 💚
+    </button>
+
+    <p id="answer" aria-live="polite"></p>
+  </section>
+
+  <footer>
+    Hecho con HTML, JavaScript y un poquito de cariño. ❤️
+  </footer>
+
+</main>
+
+<script>
+function answer(yes) {
+  const result = document.getElementById("answer");
+
+  if (yes) {
+    result.textContent =
+      "¡Qué bonito! ❤️ Podemos ponernos de acuerdo para elegir el día.";
+    for (let i = 0; i < 18; i++) createHeart();
+  } else {
+    result.textContent =
+      "No pasa nada. Gracias por leer mi invitación. 💚";
+  }
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.textContent = ["❤️", "🌷", "✨"][Math.floor(Math.random()*3)];
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.bottom = "0";
+  heart.style.fontSize = "25px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 3000);
+}
+</script>
+</body>
+</html>
