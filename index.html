@@ -23,8 +23,7 @@ body {
 .sky {
   position: fixed;
   inset: 0;
-  background:
-    linear-gradient(#75bce3 0 58%, #6caa48 58% 100%);
+  background: linear-gradient(#75bce3 0 58%, #6caa48 58% 100%);
   z-index: -3;
 }
 
@@ -46,9 +45,7 @@ body {
   width: 95px;
   height: 25px;
   background: white;
-  box-shadow:
-    25px -20px white,
-    50px 0 white;
+  box-shadow: 25px -20px white, 50px 0 white;
   z-index: -2;
 }
 
@@ -76,8 +73,7 @@ body {
   bottom: 0;
   height: 35%;
   width: 100%;
-  background:
-    linear-gradient(#6eaa43 0 18%, #765033 18% 100%);
+  background: linear-gradient(#6eaa43 0 18%, #765033 18% 100%);
   z-index: -1;
   border-top: 8px solid #8bc34a;
 }
@@ -168,44 +164,60 @@ h1 {
   font-size: 25px;
 }
 
+/* Área amplia y estable para los botones */
 .buttons {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 18px;
-  min-height: 150px;
-  margin-top: 20px;
+  width: 100%;
+  height: 230px;
+  margin: 25px auto;
+  overflow: hidden;
+  border: 2px dashed rgba(255,255,255,.22);
+  border-radius: 10px;
 }
 
-button {
+/* Los dos botones tienen posiciones independientes */
+.buttons button {
+  position: absolute;
+  width: 42%;
+  max-width: 175px;
+  min-height: 55px;
+  padding: 14px 8px;
   font-family: monospace;
   font-weight: bold;
   font-size: 16px;
-  padding: 17px 22px;
   border: 4px solid rgba(0,0,0,.25);
-  cursor: pointer;
   box-shadow: 0 6px rgba(0,0,0,.3);
-  transition: transform .18s;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.yes {
+  background: #78c94b;
+  color: #173415;
+  left: 4%;
+  top: 40%;
+}
+
+.no {
+  background: #c7b18b;
+  color: #443324;
+  left: 54%;
+  top: 40%;
+  transition: left .18s ease, top .18s ease;
 }
 
 button:active {
   box-shadow: 0 2px rgba(0,0,0,.3);
 }
 
-.yes {
-  background: #78c94b;
-  color: #173415;
+button:disabled {
+  opacity: .7;
+  cursor: default;
 }
 
-.no {
-  background: #c7b18b;
-  color: #443324;
-}
-
-#noMessage, #answer {
-  min-height: 24px;
+#noMessage,
+#answer {
+  min-height: 28px;
   line-height: 1.6;
   color: #fff1ae;
 }
@@ -230,12 +242,37 @@ footer {
 }
 
 @media(max-width: 420px) {
-  .buttons {
-    min-height: 190px;
+  .container {
+    width: 94%;
+    padding: 40px 8px;
   }
 
-  button {
-    padding: 14px;
+  .card {
+    padding: 22px 12px;
+  }
+
+  .buttons {
+    height: 260px;
+  }
+
+  .buttons button {
+    width: 43%;
+    font-size: 14px;
+    min-height: 58px;
+  }
+
+  .yes {
+    left: 3%;
+    top: 40%;
+  }
+
+  .no {
+    left: 54%;
+    top: 40%;
+  }
+
+  .question {
+    font-size: 22px;
   }
 }
 </style>
@@ -257,9 +294,9 @@ footer {
   <h1 class="pixel">Hola, Pesuñona ❤️</h1>
 
   <p class="subtitle">
-  ¿Y si vamos por una pizza y después nos ponemos a ver
-  videos del Rey de las Bromas? JAJAJAJA
-</p>
+    ¿Y si vamos por una pizza y después nos ponemos a ver
+    videos del Rey de las Bromas? JAJAJAJA
+  </p>
 
   <div class="world">
     <div class="tree">🌳</div>
@@ -275,64 +312,50 @@ footer {
     </h2>
 
     <p class="subtitle">
-      Me gustaría compartir una noche de aqui alas 10 jaja ,  contigo ...  ❤️
+      Me gustaría compartir una noche de aquí a las 10 jaja,
+      contigo... ❤️
     </p>
 
     <div class="buttons" id="buttonArea">
 
-      <button class="yes" onclick="answer(true)">
+      <button class="yes" id="yesBtn">
         ¡SÍ! 🌷
       </button>
 
-      <button class="no" id="noBtn" onclick="answer(false)">
+      <button class="no" id="noBtn">
         NO 💚
       </button>
 
     </div>
 
-    <p id="noMessage"></p>
+    <p id="noMessage" aria-live="polite"></p>
     <p id="answer" aria-live="polite"></p>
 
   </section>
 
   <footer>
-    TENOSH DIGITAL INC 
+    TENOSH DIGITAL INC
   </footer>
 
 </main>
 
 <script>
 
-// Usa un número dedicado si quieres recibir respuestas.
-// Formato internacional: código de país + número.
-// No publiques tu número personal en un repositorio público.
+// Pon aquí tu número en formato internacional.
+// Ejemplo: 52 seguido del número.
+// Evita publicar tu número personal en un repositorio público.
 const miNumero = "2217813856";
 
 let intentos = 0;
 let respuestaEnviada = false;
 
 const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
 const area = document.getElementById("buttonArea");
 const noMessage = document.getElementById("noMessage");
+const answerText = document.getElementById("answer");
 
-function escapar() {
-  if (intentos >= 5) return;
-
-  intentos++;
-
-  const maxX = Math.max(
-    0,
-    (area.clientWidth - noBtn.offsetWidth) / 2 - 5
-  );
-
-  const maxY = 65;
-
-  const x = (Math.random() * 2 - 1) * maxX;
-  const y = (Math.random() * 2 - 1) * maxY;
-
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
-
-  const bromas = [
+const bromas = [
     " No seas gay  :(",
     " NETA :/",
     " Andale de invito un Starbucks :/ ",
@@ -340,52 +363,122 @@ function escapar() {
     " Ahora si enserio ",
   ];
 
+function escapar() {
+
+  if (intentos >= 5 || respuestaEnviada) return;
+
+  intentos++;
+
+  // Medidas reales del área y del botón
+  const areaWidth = area.clientWidth;
+  const areaHeight = area.clientHeight;
+
+  const btnWidth = noBtn.offsetWidth;
+  const btnHeight = noBtn.offsetHeight;
+
+  const margin = 8;
+
+  // Posiciones aleatorias dentro del área
+  const maxLeft = areaWidth - btnWidth - margin;
+  const maxTop = areaHeight - btnHeight - margin;
+
+  const currentLeft = parseFloat(noBtn.style.left) || noBtn.offsetLeft;
+  const currentTop = parseFloat(noBtn.style.top) || noBtn.offsetTop;
+
+  let newLeft;
+  let newTop;
+
+  // Busca una posición suficientemente alejada
+  let attempts = 0;
+
+  do {
+    newLeft = margin + Math.random() * Math.max(0, maxLeft - margin);
+    newTop = margin + Math.random() * Math.max(0, maxTop - margin);
+    attempts++;
+  } while (
+    Math.hypot(newLeft - currentLeft, newTop - currentTop) < 75
+    && attempts < 30
+  );
+
+  noBtn.style.left = newLeft + "px";
+  noBtn.style.top = newTop + "px";
+
   noMessage.textContent = bromas[intentos - 1];
 
   if (intentos === 5) {
-    noBtn.style.transform = "translate(0,0)";
     noMessage.textContent =
-      "¡Última oportunidad! Ahora sí puedes elegir. 💚";
+      " Ya Neta :( ";
   }
 }
 
-// El botón se mueve al entrar el puntero,
-// pero solo cinco veces.
-noBtn.addEventListener("pointerenter", escapar);
+// En computadora se mueve al acercar el cursor.
+noBtn.addEventListener("pointerenter", (event) => {
+  if (event.pointerType === "mouse" && intentos < 5) {
+    escapar();
+  }
+});
+
+// En celular, cada toque provoca un movimiento durante
+// los primeros cinco intentos. El sexto permite responder NO.
+noBtn.addEventListener("click", () => {
+
+  if (respuestaEnviada) return;
+
+  if (intentos < 5) {
+    escapar();
+  } else {
+    answer(false);
+  }
+
+});
+
+yesBtn.addEventListener("click", () => answer(true));
 
 function answer(yes) {
+
   if (respuestaEnviada) return;
+
   respuestaEnviada = true;
 
   const mensaje = yes
-    ? " Si quiero salir pero nomas hoy ehhhhh "
-    : " No vtalv jajaja ";
+    ? "Sí quiero salir, pero nomás hoy ehhhhh ❤️"
+    : "No vtalv jajaj";
 
-  document.getElementById("answer").textContent =
-    yes
-      ? " Qué bonito :)"
-      : " JAJAJA no ";
+  answerText.textContent = yes
+    ? "Yo sabia jaja"
+    : " oka :/ ";
 
   noBtn.disabled = true;
+  yesBtn.disabled = true;
 
-  const url = "https://wa.me/" + miNumero +
-    "?text=" + encodeURIComponent(mensaje);
-
+  // Abre WhatsApp con el mensaje preparado.
   if (!miNumero.includes("X")) {
+
+    const url = "https://wa.me/" + miNumero +
+      "?text=" + encodeURIComponent(mensaje);
+
     window.open(url, "_blank");
+
   } else {
-    document.getElementById("answer").textContent +=
+
+    answerText.textContent +=
       " Configura primero el número de WhatsApp.";
+
   }
 
   if (yes) {
-    for (let i = 0; i < 18; i++) createHeart();
+    for (let i = 0; i < 18; i++) {
+      createHeart();
+    }
   }
 }
 
 function createHeart() {
+
   const heart = document.createElement("div");
+
   heart.className = "heart";
+
   heart.textContent = ["❤️", "🌷", "✨"][
     Math.floor(Math.random() * 3)
   ];
@@ -400,5 +493,6 @@ function createHeart() {
 }
 
 </script>
+
 </body>
 </html>
