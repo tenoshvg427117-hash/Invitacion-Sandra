@@ -23,9 +23,9 @@ body {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 15% 20%, #fff 1px, transparent 2px),
-    radial-gradient(circle at 80% 12%, #fff 1px, transparent 2px),
-    radial-gradient(circle at 65% 35%, #fff 1px, transparent 2px);
+    radial-gradient(circle at 15% 20%, white 1px, transparent 2px),
+    radial-gradient(circle at 80% 12%, white 1px, transparent 2px),
+    radial-gradient(circle at 65% 35%, white 1px, transparent 2px);
   background-size: 180px 150px;
   opacity: .7;
 }
@@ -130,9 +130,7 @@ h1 {
   box-shadow: 7px 7px #101f20;
 }
 
-.card h2 {
-  color: #ffe6a0;
-}
+.card h2 { color: #ffe6a0; }
 
 .memories {
   display: grid;
@@ -163,10 +161,7 @@ button {
   font-size: 16px;
   font-family: inherit;
   transition: transform .2s;
-}
-
-button:hover {
-  transform: translateY(-4px);
+  border-radius: 5px;
 }
 
 .yes {
@@ -187,6 +182,12 @@ button:hover {
   color: #ffe6a0;
 }
 
+#noMessage {
+  font-size: 13px;
+  color: #d9f4e2;
+  min-height: 20px;
+}
+
 footer {
   margin-top: 35px;
   color: #d5e7d8;
@@ -197,10 +198,14 @@ footer {
   position: fixed;
   pointer-events: none;
   animation: float 3s linear forwards;
+  z-index: 10;
 }
 
 @keyframes float {
-  to { transform: translateY(-100vh) rotate(30deg); opacity: 0; }
+  to {
+    transform: translateY(-100vh) rotate(30deg);
+    opacity: 0;
+  }
 }
 
 @media(max-width:400px) {
@@ -234,6 +239,7 @@ footer {
 
   <section class="card">
     <h2 class="pixel">Nuestro pequeño mundo</h2>
+
     <p>
       Entre partidas, risas, películas y recuerdos,
       hay muchas aventuras que siempre voy a guardar
@@ -241,10 +247,10 @@ footer {
     </p>
 
     <div class="memories">
-      <div class="memory">🎮<br> Nuestras partidas</div>
-      <div class="memory">🍟<br> Nuestras botanas</div>
-      <div class="memory">🎬<br> Nuestras películas</div>
-      <div class="memory">🌷<br> Los pequeños detalles</div>
+      <div class="memory">🎮<br>Nuestras partidas</div>
+      <div class="memory">🍟<br>Nuestras botanas</div>
+      <div class="memory">🎬<br>Nuestras películas</div>
+      <div class="memory">🌷<br>Los pequeños detalles</div>
     </div>
   </section>
 
@@ -267,10 +273,11 @@ footer {
       ¡Sí, me gustaría! 🌷
     </button>
 
-    <button class="no" onclick="answer(false)">
+    <button class="no" id="noBtn" onclick="answer(false)">
       Esta vez no 💚
     </button>
 
+    <p id="noMessage"></p>
     <p id="answer" aria-live="polite"></p>
   </section>
 
@@ -281,29 +288,91 @@ footer {
 </main>
 
 <script>
+
+// CAMBIA ESTE NÚMERO POR EL TUYO.
+// Incluye el código de país, sin + ni espacios.
+const miNumero = "52TUNUMERO";
+
+let intentosNo = 0;
+
+const noBtn = document.getElementById("noBtn");
+const noMessage = document.getElementById("noMessage");
+
+function moverBoton() {
+  if (intentosNo >= 5) return;
+
+  intentosNo++;
+
+  const maxX = Math.min(130, window.innerWidth * 0.25);
+  const maxY = 65;
+
+  const x = (Math.random() * maxX * 2) - maxX;
+  const y = (Math.random() * maxY * 2) - maxY;
+
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+
+  const bromas = [
+    "¡Uy! Se escapó. 😂",
+    "¡Casi lo atrapas! 🤣",
+    "Ese botón tiene miedo.",
+    "JAJAJA, intenta otra vez.",
+    "Bueno, ahora sí puedes elegir. 💚"
+  ];
+
+  noMessage.textContent = bromas[intentosNo - 1];
+
+  if (intentosNo === 5) {
+    noBtn.style.transform = "translate(0, 0)";
+    noMessage.textContent =
+      "JAJAJA, ya no se escapa. Ahora sí puedes elegir. 💚";
+  }
+}
+
+noBtn.addEventListener("pointerenter", moverBoton);
+noBtn.addEventListener("click", () => {
+  if (intentosNo < 5) {
+    moverBoton();
+  } else {
+    answer(false);
+  }
+});
+
 function answer(yes) {
-  const result = document.getElementById("answer");
+  const mensaje = yes
+    ? "¡Sí! Me gustaría salir contigo. ❤️"
+    : "Gracias por invitarme, pero esta vez prefiero que no. 💚";
+
+  document.getElementById("answer").textContent =
+    yes
+      ? "¡Qué bonito! ❤️ Espero que tengamos un día genial."
+      : "Gracias por responder. No pasa nada. 💚";
+
+  const url = "https://wa.me/" + miNumero +
+    "?text=" + encodeURIComponent(mensaje);
+
+  window.open(url, "_blank");
 
   if (yes) {
-    result.textContent =
-      "¡Qué bonito! ❤️ Podemos ponernos de acuerdo para elegir el día.";
     for (let i = 0; i < 18; i++) createHeart();
-  } else {
-    result.textContent =
-      "No pasa nada. Gracias por leer mi invitación. 💚";
   }
 }
 
 function createHeart() {
   const heart = document.createElement("div");
   heart.className = "heart";
-  heart.textContent = ["❤️", "🌷", "✨"][Math.floor(Math.random()*3)];
+  heart.textContent = ["❤️", "🌷", "✨"][
+    Math.floor(Math.random() * 3)
+  ];
+
   heart.style.left = Math.random() * 100 + "vw";
   heart.style.bottom = "0";
   heart.style.fontSize = "25px";
+
   document.body.appendChild(heart);
+
   setTimeout(() => heart.remove(), 3000);
 }
+
 </script>
 </body>
 </html>
