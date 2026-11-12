@@ -4,194 +4,215 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Una aventura contigo ❤️</title>
+<title>Una aventura especial</title>
 
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Trebuchet MS", sans-serif;
+  font-family: monospace;
   color: white;
-  background: linear-gradient(#172b4b, #416b78, #263c35);
+  background: #79bde0;
   overflow-x: hidden;
 }
 
 .sky {
   position: fixed;
   inset: 0;
-  pointer-events: none;
   background:
-    radial-gradient(circle at 15% 20%, white 1px, transparent 2px),
-    radial-gradient(circle at 80% 12%, white 1px, transparent 2px),
-    radial-gradient(circle at 65% 35%, white 1px, transparent 2px);
-  background-size: 180px 150px;
-  opacity: .7;
+    linear-gradient(#75bce3 0 58%, #6caa48 58% 100%);
+  z-index: -3;
+}
+
+.sun {
+  position: fixed;
+  top: 65px;
+  right: 12%;
+  width: 75px;
+  height: 75px;
+  background: #ffe68a;
+  box-shadow: 0 0 35px #ffe68a;
+  z-index: -2;
+}
+
+.cloud {
+  position: fixed;
+  top: 120px;
+  left: 10%;
+  width: 95px;
+  height: 25px;
+  background: white;
+  box-shadow:
+    25px -20px white,
+    50px 0 white;
+  z-index: -2;
+}
+
+.mountain {
+  position: fixed;
+  bottom: 36%;
+  left: -5%;
+  width: 300px;
+  height: 160px;
+  background: #668b75;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  z-index: -2;
+}
+
+.mountain.two {
+  left: auto;
+  right: -5%;
+  width: 350px;
+  height: 200px;
+  background: #587d69;
+}
+
+.grass {
+  position: fixed;
+  bottom: 0;
+  height: 35%;
+  width: 100%;
+  background:
+    linear-gradient(#6eaa43 0 18%, #765033 18% 100%);
+  z-index: -1;
+  border-top: 8px solid #8bc34a;
 }
 
 .container {
-  position: relative;
-  max-width: 650px;
+  width: min(92%, 650px);
   margin: auto;
-  padding: 55px 22px;
+  padding: 55px 15px;
   text-align: center;
 }
 
 .pixel {
-  font-family: monospace;
-  text-shadow: 3px 3px #152331;
+  text-shadow: 4px 4px #304c2d;
   letter-spacing: 2px;
 }
 
 h1 {
-  font-size: clamp(30px, 7vw, 49px);
-  margin-bottom: 12px;
+  font-size: clamp(30px, 7vw, 48px);
+  color: #fff1ae;
 }
 
 .subtitle {
-  color: #d9f4e2;
-  font-size: 17px;
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.8;
+  text-shadow: 2px 2px #31533a;
 }
 
 .world {
-  margin: 35px auto;
-  height: 190px;
-  max-width: 470px;
+  height: 240px;
   position: relative;
-  border: 5px solid #1e342d;
-  background: linear-gradient(#7ab8d6 0 65%, #6d9b4d 65% 100%);
+  margin: 30px auto;
+  max-width: 480px;
+  background: #8bd0ec;
+  border: 8px solid #547c45;
+  box-shadow: 9px 9px #33472d;
   overflow: hidden;
-  box-shadow: 0 9px #172c25;
 }
 
-.sun {
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  background: #ffe58a;
-  top: 22px;
-  right: 45px;
-  box-shadow: 0 0 25px #ffe58a;
-}
-
-.cloud {
-  position: absolute;
-  width: 85px;
-  height: 20px;
-  background: white;
-  top: 48px;
-  left: 45px;
-  box-shadow: 15px -15px white, 35px 0 white;
-}
-
-.ground {
+.block {
   position: absolute;
   bottom: 0;
-  height: 32px;
   width: 100%;
-  background: repeating-linear-gradient(
-    90deg, #765136 0 28px, #65442e 28px 30px
-  );
+  height: 35px;
+  background: #80512e;
+  border-top: 10px solid #73ae42;
 }
 
 .tree {
   position: absolute;
   bottom: 30px;
-  left: 15%;
-  font-size: 48px;
+  left: 13%;
+  font-size: 60px;
 }
 
-.flowers {
+.flower {
   position: absolute;
-  bottom: 29px;
-  right: 17%;
-  font-size: 29px;
+  bottom: 30px;
+  right: 15%;
+  font-size: 35px;
 }
 
 .player {
   position: absolute;
-  bottom: 28px;
-  left: 47%;
-  font-size: 43px;
-  animation: bounce 1.5s infinite ease-in-out;
+  bottom: 30px;
+  left: 46%;
+  font-size: 55px;
+  animation: jump 1.5s infinite;
 }
 
-@keyframes bounce {
-  50% { transform: translateY(-9px); }
+@keyframes jump {
+  50% { transform: translateY(-12px); }
 }
 
 .card {
-  margin: 25px auto;
-  padding: 25px 20px;
-  background: #152b2cdd;
-  border: 3px solid #8abf83;
-  box-shadow: 7px 7px #101f20;
+  background: #31583c;
+  border: 6px solid #8dbb66;
+  padding: 25px 18px;
+  box-shadow: 9px 9px #263c2b;
+  margin-top: 30px;
 }
 
-.card h2 { color: #ffe6a0; }
-
-.memories {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.memory {
-  padding: 17px 8px;
-  background: #294c42;
-  border: 2px solid #8abf83;
-  line-height: 1.6;
+.card h2 {
+  color: #ffe69b;
+  line-height: 1.5;
 }
 
 .question {
   font-size: 25px;
-  color: #ffe6a0;
-  line-height: 1.5;
+}
+
+.buttons {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  min-height: 150px;
+  margin-top: 20px;
 }
 
 button {
-  border: 0;
-  padding: 15px 22px;
-  margin: 8px;
-  cursor: pointer;
+  font-family: monospace;
   font-weight: bold;
   font-size: 16px;
-  font-family: inherit;
-  transition: transform .2s;
-  border-radius: 5px;
+  padding: 17px 22px;
+  border: 4px solid rgba(0,0,0,.25);
+  cursor: pointer;
+  box-shadow: 0 6px rgba(0,0,0,.3);
+  transition: transform .18s;
+}
+
+button:active {
+  box-shadow: 0 2px rgba(0,0,0,.3);
 }
 
 .yes {
-  background: #8bd17c;
-  color: #18351e;
-  box-shadow: 0 5px #467d43;
+  background: #78c94b;
+  color: #173415;
 }
 
 .no {
-  background: #e7d8c5;
-  color: #493c34;
-  box-shadow: 0 5px #a79580;
+  background: #c7b18b;
+  color: #443324;
 }
 
-#answer {
-  min-height: 45px;
+#noMessage, #answer {
+  min-height: 24px;
   line-height: 1.6;
-  color: #ffe6a0;
-}
-
-#noMessage {
-  font-size: 13px;
-  color: #d9f4e2;
-  min-height: 20px;
+  color: #fff1ae;
 }
 
 footer {
   margin-top: 35px;
-  color: #d5e7d8;
-  font-size: 13px;
+  text-shadow: 2px 2px #304c2d;
 }
 
 .heart {
@@ -203,154 +224,159 @@ footer {
 
 @keyframes float {
   to {
-    transform: translateY(-100vh) rotate(30deg);
+    transform: translateY(-100vh);
     opacity: 0;
   }
 }
 
-@media(max-width:400px) {
-  .memories { grid-template-columns: 1fr; }
+@media(max-width: 420px) {
+  .buttons {
+    min-height: 190px;
+  }
+
+  button {
+    padding: 14px;
+  }
 }
 </style>
 </head>
 
 <body>
+
 <div class="sky"></div>
+<div class="sun"></div>
+<div class="cloud"></div>
+<div class="mountain"></div>
+<div class="mountain two"></div>
+<div class="grass"></div>
 
 <main class="container">
 
-  <p class="pixel">✦ UNA PEQUEÑA AVENTURA ✦</p>
+  <p class="pixel">✦ UNA NUEVA AVENTURA ✦</p>
 
   <h1 class="pixel">Hola, Sandra ❤️</h1>
 
   <p class="subtitle">
-    He preparado un pequeño mundo para hacerte una pregunta.
-    No necesitas ninguna armadura para entrar.
+    He construido un pequeño mundo para hacerte una pregunta...
   </p>
 
   <div class="world">
-    <div class="sun"></div>
-    <div class="cloud"></div>
     <div class="tree">🌳</div>
-    <div class="flowers">🌷 🌼</div>
+    <div class="flower">🌷</div>
     <div class="player">🧑🏻</div>
-    <div class="ground"></div>
+    <div class="block"></div>
   </div>
 
   <section class="card">
-    <h2 class="pixel">Nuestro pequeño mundo</h2>
 
-    <p>
-      Entre partidas, risas, películas y recuerdos,
-      hay muchas aventuras que siempre voy a guardar
-      con cariño.
-    </p>
-
-    <div class="memories">
-      <div class="memory">🎮<br>Nuestras partidas</div>
-      <div class="memory">🍟<br>Nuestras botanas</div>
-      <div class="memory">🎬<br>Nuestras películas</div>
-      <div class="memory">🌷<br>Los pequeños detalles</div>
-    </div>
-  </section>
-
-  <section class="card">
-    <p class="subtitle">
-      No quiero complicar las cosas.
-      Simplemente me gustaría compartir un día bonito contigo.
-    </p>
-
-    <h2 class="question">
-      ¿Te gustaría salir conmigo? ❤️
+    <h2 class="pixel question">
+      ¿Te gustaría salir conmigo?
     </h2>
 
     <p class="subtitle">
-      Sin presiones, sin expectativas.
-      Solo pasar un buen rato.
+      Me gustaría compartir un día bonito contigo.
+      Sin prisas y sin presiones. ❤️
     </p>
 
-    <button class="yes" onclick="answer(true)">
-      ¡Sí, me gustaría! 🌷
-    </button>
+    <div class="buttons" id="buttonArea">
 
-    <button class="no" id="noBtn" onclick="answer(false)">
-      Esta vez no 💚
-    </button>
+      <button class="yes" onclick="answer(true)">
+        ¡SÍ! 🌷
+      </button>
+
+      <button class="no" id="noBtn" onclick="answer(false)">
+        NO 💚
+      </button>
+
+    </div>
 
     <p id="noMessage"></p>
     <p id="answer" aria-live="polite"></p>
+
   </section>
 
   <footer>
-    Hecho con HTML, JavaScript y un poquito de cariño. ❤️
+    Construido bloque por bloque, con cariño. ❤️
   </footer>
 
 </main>
 
 <script>
 
-// CAMBIA ESTE NÚMERO POR EL TUYO.
-// Incluye el código de país, sin + ni espacios.
-const miNumero = "52TUNUMERO";
+// Usa un número dedicado si quieres recibir respuestas.
+// Formato internacional: código de país + número.
+// No publiques tu número personal en un repositorio público.
+const miNumero = "2217813856";
 
-let intentosNo = 0;
+let intentos = 0;
+let respuestaEnviada = false;
 
 const noBtn = document.getElementById("noBtn");
+const area = document.getElementById("buttonArea");
 const noMessage = document.getElementById("noMessage");
 
-function moverBoton() {
-  if (intentosNo >= 5) return;
+function escapar() {
+  if (intentos >= 5) return;
 
-  intentosNo++;
+  intentos++;
 
-  const maxX = Math.min(130, window.innerWidth * 0.25);
+  const maxX = Math.max(
+    0,
+    (area.clientWidth - noBtn.offsetWidth) / 2 - 5
+  );
+
   const maxY = 65;
 
-  const x = (Math.random() * maxX * 2) - maxX;
-  const y = (Math.random() * maxY * 2) - maxY;
+  const x = (Math.random() * 2 - 1) * maxX;
+  const y = (Math.random() * 2 - 1) * maxY;
 
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
 
   const bromas = [
-    "¡Uy! Se escapó. 😂",
-    "¡Casi lo atrapas! 🤣",
-    "Ese botón tiene miedo.",
-    "JAJAJA, intenta otra vez.",
-    "Bueno, ahora sí puedes elegir. 💚"
+    "¡Ese bloque se movió! 😂",
+    "¡Casi lo atrapas! JAJAJA",
+    "¡Modo supervivencia activado!",
+    "¡El aldeano escapó! 🤣",
+    "JAJAJA, listo. Ahora puedes elegir."
   ];
 
-  noMessage.textContent = bromas[intentosNo - 1];
+  noMessage.textContent = bromas[intentos - 1];
 
-  if (intentosNo === 5) {
-    noBtn.style.transform = "translate(0, 0)";
+  if (intentos === 5) {
+    noBtn.style.transform = "translate(0,0)";
     noMessage.textContent =
-      "JAJAJA, ya no se escapa. Ahora sí puedes elegir. 💚";
+      "¡Última oportunidad! Ahora sí puedes elegir. 💚";
   }
 }
 
-noBtn.addEventListener("pointerenter", moverBoton);
-noBtn.addEventListener("click", () => {
-  if (intentosNo < 5) {
-    moverBoton();
-  } else {
-    answer(false);
-  }
-});
+// El botón se mueve al entrar el puntero,
+// pero solo cinco veces.
+noBtn.addEventListener("pointerenter", escapar);
 
 function answer(yes) {
+  if (respuestaEnviada) return;
+  respuestaEnviada = true;
+
   const mensaje = yes
-    ? "¡Sí! Me gustaría salir contigo. ❤️"
-    : "Gracias por invitarme, pero esta vez prefiero que no. 💚";
+    ? "¡Sí! Me gustaría salir contigo ❤️"
+    : "Gracias por invitarme, pero esta vez prefiero que no 💚";
 
   document.getElementById("answer").textContent =
     yes
-      ? "¡Qué bonito! ❤️ Espero que tengamos un día genial."
+      ? "¡Qué bonito! ❤️"
       : "Gracias por responder. No pasa nada. 💚";
+
+  noBtn.disabled = true;
 
   const url = "https://wa.me/" + miNumero +
     "?text=" + encodeURIComponent(mensaje);
 
-  window.open(url, "_blank");
+  if (!miNumero.includes("X")) {
+    window.open(url, "_blank");
+  } else {
+    document.getElementById("answer").textContent +=
+      " Configura primero el número de WhatsApp.";
+  }
 
   if (yes) {
     for (let i = 0; i < 18; i++) createHeart();
